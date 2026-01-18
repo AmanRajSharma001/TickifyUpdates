@@ -360,8 +360,8 @@ const Checkout = () => {
             amount: Math.round(totalAmount * 100), // Amount in paise
             currency: "INR",
             name: "Tickify Events",
-            description: state.isResale ? `Resale Purchase` : `Tickets for ${event.title}`,
-            image: "https://via.placeholder.com/150",
+            description: state.isResale ? `Resale Purchase` : `Tickets for ${event.title || 'Event'}`,
+            image: event.image || "https://placehold.co/150x150",
             order_id: "", // If you create orders on backend, pass it here
             handler: async function (response) {
                 console.log("Payment Successful", response);
