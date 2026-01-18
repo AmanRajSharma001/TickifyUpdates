@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { db } from '../../config/firebase';
-import { collection, query, where, getDocs, doc, getDoc, setDoc, serverTimestamp, addDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc, getDoc, setDoc, serverTimestamp, addDoc, deleteDoc } from 'firebase/firestore';
+
+
 import toast from 'react-hot-toast';
 import { uploadToS3 } from '../../services/s3Service';
 import { Map, MapControls, MapMarker, MarkerContent, MarkerPopup, MarkerLabel } from '@/components/ui/map';
@@ -72,6 +74,17 @@ const OrganizerDashboard = () => {
         };
         if (events.length > 0) geocodeLocations();
     }, [events]);
+
+    const handleDelete = async (eventId) => {
+        if (!window.confirm("Are you sure you want to delete this event? This action cannot be undone.")) return;
+        try {
+            await deleteDoc(doc(db, 'events', eventId));
+            setEvents(events.filter(e => e.id !== eventId));
+            toast.success("Event deleted successfully.");
+        } catch (error) {
+            toast.error("Failed to delete event.");
+        }
+    };
 
     // Withdrawal State
     const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
@@ -584,6 +597,12 @@ const OrganizerDashboard = () => {
                             <div className="flex gap-2 mt-4">
                                 <Link to={`/organizer/events/${event.id}/edit`} className="text-xs font-black uppercase bg-[var(--color-bg-surface)] text-[var(--color-text-primary)] border-2 border-[var(--color-text-primary)] px-3 py-1 hover:bg-[var(--color-text-primary)] hover:text-[var(--color-bg-primary)] transition-colors">Edit</Link>
                                 <Link to={`/organizer/events/${event.id}/analytics`} className="text-xs font-black uppercase bg-[var(--color-bg-surface)] text-[var(--color-text-primary)] border-2 border-[var(--color-text-primary)] px-3 py-1 hover:bg-[var(--color-text-primary)] hover:text-[var(--color-bg-primary)] transition-colors">Analytics</Link>
+                                <button
+                                    onClick={() => handleDelete(event.id)}
+                                    className="text-xs font-black uppercase bg-red-100 text-red-800 border-2 border-red-800 px-3 py-1 hover:bg-red-800 hover:text-white transition-colors"
+                                >
+                                    Delete
+                                </button>
                             </div>
                         </div>
                     </div>

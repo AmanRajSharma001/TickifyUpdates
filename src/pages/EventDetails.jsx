@@ -214,7 +214,7 @@ const EventDetails = () => {
                             <div className="mb-12 p-6 bg-white rounded-xl border border-gray-100 shadow-sm">
                                 <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest mb-4">Terms & Conditions</h3>
                                 <ul className="list-disc pl-5 space-y-2 text-sm text-gray-600 marker:text-[#F84464]">
-                                    <li>Tickets once booked cannot be exchanged or refunded.</li>
+                                    <li>Tickets cannot be exchanged or refunded, but you can resell them on our marketplace.</li>
                                     <li>An Internet handling fee per ticket may be levied.</li>
                                     <li>Please check the total amount before payment.</li>
                                     <li>We recommend that you arrive at-least 20 minutes prior at the venue for a seamless entry.</li>
