@@ -329,7 +329,7 @@ const Checkout = () => {
 
         if (!RAZORPAY_KEY) {
             try {
-                const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+                const backendUrl = import.meta.env.VITE_BACKEND_URL || 'https://tickify-backend-bnio.onrender.com';
                 const keyRes = await fetch(`${backendUrl}/get-razorpay-key`);
                 const keyData = await keyRes.json();
                 RAZORPAY_KEY = keyData.key;
