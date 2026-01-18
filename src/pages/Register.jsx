@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { sendOTPSMS, verifyOTP as verifyPhoneOTP, clearOTP as clearPhoneOTP } from '../services/messageCentralOTPService';
 import { sendOTPEmail, verifyOTP as verifyEmailOTP, clearOTP as clearEmailOTP } from '../services/brevoService';
@@ -28,6 +28,11 @@ const Register = () => {
 
     const { signup, signInWithGoogle } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+
+    // Destination after successful registration
+    const from = location.state?.from || '/';
+    const checkoutState = location.state?.checkoutState || null;
 
     const handleGoogleSignIn = async () => {
         setError('');
@@ -35,7 +40,7 @@ const Register = () => {
 
         try {
             await signInWithGoogle();
-            navigate('/');
+            navigate(from, { state: checkoutState });
         } catch (err) {
             toast.error('Google sign-in failed');
             if (err.code === 'auth/popup-closed-by-user') {
@@ -237,7 +242,7 @@ const Register = () => {
             setSuccess('Account created successfully! Redirecting...');
             toast.success('Account created successfully!');
             setTimeout(() => {
-                navigate('/');
+                navigate(from, { state: checkoutState });
             }, 1500);
         } catch (err) {
             toast.error('Registration failed');
@@ -655,7 +660,7 @@ const Register = () => {
                     <div className="mt-8 pt-6 border-t-2 border-dashed border-[var(--color-text-muted)] text-center">
                         <p className="font-bold text-[var(--color-text-secondary)]">
                             Already have an account?{' '}
-                            <Link to="/login" className="text-[var(--color-text-primary)] hover:text-[var(--color-accent-primary)] underline decoration-2 decoration-[var(--color-accent-primary)]">
+                            <Link to="/login" state={{ from, checkoutState }} className="text-[var(--color-text-primary)] hover:text-[var(--color-accent-primary)] underline decoration-2 decoration-[var(--color-accent-primary)]">
                                 Sign In
                             </Link>
                         </p>

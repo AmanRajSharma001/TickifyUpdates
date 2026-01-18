@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
@@ -17,6 +17,11 @@ const Login = () => {
 
     const { login, signInWithGoogle } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+
+    // Destination after successful login
+    const from = location.state?.from || '/';
+    const checkoutState = location.state?.checkoutState || null;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -36,7 +41,7 @@ const Login = () => {
                 return;
             }
 
-            navigate('/');
+            navigate(from, { state: checkoutState });
         } catch (err) {
             toast.error('Login failed');
             switch (err.code) {
@@ -66,7 +71,7 @@ const Login = () => {
 
         try {
             await signInWithGoogle();
-            navigate('/');
+            navigate(from, { state: checkoutState });
         } catch (err) {
             toast.error('Google sign-in failed');
             if (err.code === 'auth/popup-closed-by-user') {
@@ -231,7 +236,7 @@ const Login = () => {
                         <div className="mt-8 pt-6 border-t-2 border-dashed border-[var(--color-text-muted)] text-center">
                             <p className="font-bold text-[var(--color-text-secondary)]">
                                 Don't have an account?{' '}
-                                <Link to="/register" className="text-[var(--color-text-primary)] hover:text-[var(--color-accent-primary)] underline decoration-2 decoration-[var(--color-accent-primary)]">
+                                <Link to="/register" state={{ from, checkoutState }} className="text-[var(--color-text-primary)] hover:text-[var(--color-accent-primary)] underline decoration-2 decoration-[var(--color-accent-primary)]">
                                     Create One
                                 </Link>
                             </p>

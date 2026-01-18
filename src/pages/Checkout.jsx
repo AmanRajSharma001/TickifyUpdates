@@ -324,7 +324,7 @@ const Checkout = () => {
         // on a backend server (Cloud Function) using the Key Secret. 
         // Client-side only integration is not tamper-proof.
         // Client-side only integration is not tamper-proof.
-        const RAZORPAY_KEY = import.meta.env.VITE_RAZORPAY_KEY_ID;
+        const RAZORPAY_KEY = import.meta.env.VITE_RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID;
         console.log("Razorpay Key ID:", RAZORPAY_KEY ? "Found" : "Missing");
 
         if (!RAZORPAY_KEY) {
@@ -355,12 +355,12 @@ const Checkout = () => {
 
                 try {
                     // Verify with Backend
-                    // In production, change http://localhost:3000 to your actual server URL
-                    const verifyRes = await fetch('http://localhost:3000/verify-payment', {
+                    const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+                    const verifyRes = await fetch(`${backendUrl}/verify-payment`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
-                            razorpay_order_id: response.razorpay_order_id, // Note: standard checkout might not return order_id unless you created one
+                            razorpay_order_id: response.razorpay_order_id,
                             razorpay_payment_id: response.razorpay_payment_id,
                             razorpay_signature: response.razorpay_signature
                         })

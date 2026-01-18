@@ -376,36 +376,23 @@ const EventDetails = () => {
                                                         if (isRegistrationClosed) return;
 
                                                         if (!currentUser) {
-                                                            toast((t) => (
-                                                                <div className="flex flex-col gap-2 p-1">
-                                                                    <span className="font-black text-xs uppercase tracking-tight">Hold on! You need to login first.</span>
-                                                                    <div className="flex gap-2">
-                                                                        <button
-                                                                            onClick={() => {
-                                                                                toast.dismiss(t.id);
-                                                                                navigate('/login', { state: { from: `/events/${event.id}` } });
-                                                                            }}
-                                                                            className="bg-black text-white px-4 py-2 text-[10px] font-black uppercase border-2 border-black shadow-[2px_2px_0_white]"
-                                                                        >
-                                                                            Login
-                                                                        </button>
-                                                                        <button
-                                                                            onClick={() => toast.dismiss(t.id)}
-                                                                            className="bg-white text-black px-4 py-2 text-[10px] font-black uppercase border-2 border-black"
-                                                                        >
-                                                                            Cancel
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            ), {
-                                                                duration: 4000,
-                                                                position: 'top-center',
-                                                                style: {
-                                                                    border: '4px solid black',
-                                                                    borderRadius: '0',
-                                                                    background: '#fff',
-                                                                    boxShadow: '8px 8px_0 black',
-                                                                    padding: '12px'
+                                                            const ticket = event.tickets.find((t, idx) => (t.id || idx) === selectedTicket);
+                                                            const checkoutState = {
+                                                                event: event,
+                                                                items: [{
+                                                                    ...ticket,
+                                                                    quantity: ticketQuantity,
+                                                                    totalPrice: totalPrice,
+                                                                    price: ticket.price,
+                                                                    name: ticket.name
+                                                                }],
+                                                                totalPrice: totalPrice
+                                                            };
+
+                                                            navigate('/login', {
+                                                                state: {
+                                                                    from: '/checkout',
+                                                                    checkoutState: checkoutState
                                                                 }
                                                             });
                                                             return;
@@ -421,8 +408,11 @@ const EventDetails = () => {
                                                                     items: [{
                                                                         ...ticket,
                                                                         quantity: ticketQuantity,
-                                                                        totalPrice: totalPrice
-                                                                    }]
+                                                                        totalPrice: totalPrice,
+                                                                        price: ticket.price,
+                                                                        name: ticket.name
+                                                                    }],
+                                                                    totalPrice: totalPrice
                                                                 }
                                                             });
                                                         }
