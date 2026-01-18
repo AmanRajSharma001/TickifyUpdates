@@ -15,6 +15,11 @@ export default defineConfig(({ mode }) => {
     },
     define: {
       'process.env': env
+    },
+    server: {
+      headers: {
+        'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',
+      },
     }
   }
 })
