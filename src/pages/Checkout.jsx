@@ -324,11 +324,24 @@ const Checkout = () => {
         // on a backend server (Cloud Function) using the Key Secret. 
         // Client-side only integration is not tamper-proof.
         // Client-side only integration is not tamper-proof.
-        const RAZORPAY_KEY = import.meta.env.VITE_RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID;
+        // Fetch Razorpay Key from Backend
+        let RAZORPAY_KEY = import.meta.env.VITE_RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID;
+
+        if (!RAZORPAY_KEY) {
+            try {
+                const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+                const keyRes = await fetch(`${backendUrl}/get-razorpay-key`);
+                const keyData = await keyRes.json();
+                RAZORPAY_KEY = keyData.key;
+            } catch (err) {
+                console.error("Failed to fetch Razorpay key from backend:", err);
+            }
+        }
+
         console.log("Razorpay Key ID:", RAZORPAY_KEY ? "Found" : "Missing");
 
         if (!RAZORPAY_KEY) {
-            toast.error("Razorpay Key is missing in configuration.");
+            toast.error("Razorpay Configuration Missing. Please contact support.");
             setIsProcessing(false);
             return;
         }
