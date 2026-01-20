@@ -81,7 +81,12 @@ const FeaturedEvents = () => {
                     </h2>
                     <p className="text-[var(--color-text-secondary)] font-bold text-lg border-l-4 border-[var(--color-accent-primary)] pl-4">Curated picks just for you.</p>
                 </div>
-                <Link to="/events" className="hidden md:block neo-btn px-6 py-2 bg-[var(--color-bg-surface)] text-[var(--color-text-primary)] text-sm hover:bg-[var(--color-accent-primary)] hover:text-white transition-colors uppercase font-black">VIEW ALL EVENTS -&gt;</Link>
+                <Link to="/events" className="hidden md:flex view-all-btn bg-[var(--color-bg-surface)] text-[var(--color-text-primary)] text-sm uppercase font-black group">
+                    VIEW ALL EVENTS
+                    <svg className="w-5 h-5 arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                    </svg>
+                </Link>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -126,7 +131,12 @@ const FeaturedEvents = () => {
                 ))}
             </div>
             <div className="mt-8 text-center md:hidden">
-                <Link to="/events" className="neo-btn px-6 py-3 bg-[var(--color-bg-surface)] text-[var(--color-text-primary)] font-black uppercase">VIEW ALL EVENTS -&gt;</Link>
+                <Link to="/events" className="view-all-btn bg-[var(--color-bg-surface)] text-[var(--color-text-primary)] font-black uppercase group">
+                    VIEW ALL EVENTS
+                    <svg className="w-5 h-5 arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                    </svg>
+                </Link>
             </div>
         </section>
     );
