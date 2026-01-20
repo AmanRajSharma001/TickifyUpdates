@@ -13,6 +13,7 @@ import FAQSection from '../components/FAQSection';
 import Newsletter from '../components/Newsletter';
 import OrganizerCTA from '../components/OrganizerCTA';
 import SEOHead from '../components/SEOHead';
+import Stats from '../components/Stats';
 
 
 
@@ -138,6 +139,7 @@ const Home = () => {
                 )}
 
 
+                <Stats />
                 <CategoryFilters />
                 <FeaturedEvents />
                 <OrganizerCTA />
