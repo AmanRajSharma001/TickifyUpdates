@@ -211,7 +211,8 @@ body {
 /* Light/Dark Mode Adjustments for Neo Brutalism */
 [data-theme="dark"] .neo-card,
 [data-theme="dark"] .neo-btn,
-[data-theme="dark"] .neo-input {
+[data-theme="dark"] .neo-input,
+[data-theme="dark"] .view-all-btn {
   border-color: #fff;
   box-shadow: 6px 6px 0px 0px #fff;
 }
@@ -369,9 +370,15 @@ body {
 
 /* Enhanced View All Button - Premium Tickify Style */
 .view-all-btn {
-  @apply neo-btn relative overflow-hidden flex items-center justify-center gap-3 px-8 py-3 transition-all duration-300;
+  @apply relative overflow-hidden flex items-center justify-center gap-3 px-8 py-3 transition-all duration-300;
+  border: 2px solid #000;
+  box-shadow: 4px 4px 0px 0px #000;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   z-index: 1;
 }
+
 
 .view-all-btn::before {
   content: '';
@@ -406,9 +413,13 @@ body {
 .view-all-btn:hover {
   background: var(--color-accent-primary) !important;
   color: white !important;
+  transform: translate(-4px, -4px);
+  box-shadow: 8px 8px 0px 0px #000;
 }
 
 [data-theme="dark"] .view-all-btn:hover {
   border-color: #fff !important;
+  box-shadow: 8px 8px 0px 0px #fff;
 }
+
 
