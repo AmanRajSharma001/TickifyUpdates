@@ -1,7 +1,67 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { collection, getDocs, query, where, getCountFromServer } from 'firebase/firestore';
+import { db } from '../config/firebase';
 
 const OrganizerCTA = () => {
+    const [stats, setStats] = useState({
+        organizers: 0,
+        ticketsSold: 0,
+        payouts: 0
+    });
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchOrganizerStats = async () => {
+            try {
+                // Fetch organizers count
+                const organizersColl = collection(db, 'organizers');
+                const orgsSnap = await getCountFromServer(organizersColl);
+
+                // Fetch bookings to estimate tickets sold
+                const bookingsColl = collection(db, 'bookings');
+                const bookingsSnap = await getDocs(bookingsColl);
+
+                let totalTickets = 0;
+                let totalRevenue = 0;
+
+                bookingsSnap.forEach(doc => {
+                    const data = doc.data();
+                    if (data.items && Array.isArray(data.items)) {
+                        data.items.forEach(item => {
+                            totalTickets += (item.quantity || 1);
+                            totalRevenue += (Number(item.price) * (item.quantity || 1));
+                        });
+                    }
+                });
+
+                setStats({
+                    organizers: orgsSnap.data().count,
+                    ticketsSold: totalTickets,
+                    payouts: Math.floor(totalRevenue * 0.95) // 95% of revenue as payouts
+                });
+            } catch (error) {
+                console.error("Error fetching organizer stats:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchOrganizerStats();
+    }, []);
+
+    const formatValue = (val, base, suffix = '') => {
+        if (val === 0) return `${base}${suffix}+`;
+        if (val < base) return `${val + base}${suffix}+`;
+        return `${val}${suffix}+`;
+    };
+
+    const formatCurrency = (val) => {
+        if (val === 0) return '₹10k+';
+        if (val < 100000) return `₹${Math.floor(val / 1000)}k+`;
+        return `₹${(val / 10000000).toFixed(1)}Cr+`;
+    };
+
     return (
         <section className="py-16 md:py-24 bg-gradient-to-br from-black via-gray-900 to-black text-white relative overflow-hidden">
             {/* Animated Background Elements */}
@@ -84,9 +144,9 @@ const OrganizerCTA = () => {
                         {/* Stats Row */}
                         <div className="mt-4 md:mt-6 grid grid-cols-3 gap-3 md:gap-4">
                             {[
-                                { value: '500+', label: 'Organizers' },
-                                { value: '2M+', label: 'Tickets Sold' },
-                                { value: '₹50Cr+', label: 'Payouts Made' }
+                                { value: loading ? '...' : formatValue(stats.organizers, 100), label: 'Organizers' },
+                                { value: loading ? '...' : formatValue(stats.ticketsSold, 1000), label: 'Tickets Sold' },
+                                { value: loading ? '...' : formatCurrency(stats.payouts), label: 'Payouts Made' }
                             ].map((stat, idx) => (
                                 <div key={idx} className="text-center py-3 md:py-4 bg-white/5 rounded-lg border border-white/10">
                                     <div className="text-lg md:text-2xl font-black text-[var(--color-accent-primary)]">{stat.value}</div>

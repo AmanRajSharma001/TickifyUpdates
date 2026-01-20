@@ -3,24 +3,24 @@ import React from 'react';
 const testimonials = [
     {
         id: 1,
-        name: "Alex Morgan",
-        role: "Music Lover",
-        content: "Tickify made it super easy to find tickets for the sold-out synthwave concert. The interface is just so fun to use!",
+        name: "Arjun Mehta",
+        role: "Event Attendee",
+        content: "Booked tickets for a comedy show last week. The seat selection process was seamless and the thermal ticket on my phone worked perfectly at the venue!",
         avatar: "A"
     },
     {
         id: 2,
-        name: "Sarah Chen",
-        role: "Event Organizer",
-        content: "Listing my art workshop was a breeze. I love how professional my event page looks. Highly recommended!",
-        avatar: "S"
+        name: "Priya Sharma",
+        role: "Yoga Instructor",
+        content: "As an organizer, I love the dashboard. It's so easy to track registrations for my workshops and the payouts are always on time. Best platform for creators!",
+        avatar: "P"
     },
     {
         id: 3,
-        name: "James Doe",
-        role: "Concert Goer",
-        content: "The best platform for discovering local events. I've found so many hidden gems here. 5 stars!",
-        avatar: "J"
+        name: "Vikram Singh",
+        role: "Music Producer",
+        content: "I've tried many platforms, but Tickify's resale marketplace is a game changer. I could safely list my extra concert tickets and get back my money efficiently.",
+        avatar: "V"
     }
 ];
 
