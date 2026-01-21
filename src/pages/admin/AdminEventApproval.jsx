@@ -13,24 +13,34 @@ const AdminEventApproval = () => {
     const [rejectionReason, setRejectionReason] = useState('');
     const [actionLoading, setActionLoading] = useState(false);
 
-    useEffect(() => {
-        fetchPendingEvents();
-    }, []);
+    const [currentTab, setCurrentTab] = useState('pending');
 
-    const fetchPendingEvents = async () => {
+    useEffect(() => {
+        fetchEvents();
+    }, [currentTab]);
+
+    const fetchEvents = async () => {
         try {
             setLoading(true);
             const eventsRef = collection(db, 'events');
-            const q = query(eventsRef, where('status', '==', 'pending'));
+
+            let q;
+            if (currentTab === 'pending') {
+                q = query(eventsRef, where('status', '==', 'pending'));
+            } else {
+                // Active events can be 'active' or 'published'
+                q = query(eventsRef, where('status', 'in', ['active', 'published']));
+            }
+
             const querySnapshot = await getDocs(q);
 
-            const pendingEvents = querySnapshot.docs.map(doc => ({
+            const fetchedEvents = querySnapshot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data()
             }));
 
             // Get unique organizer IDs
-            const organizerIds = [...new Set(pendingEvents.map(e => e.organizerId))];
+            const organizerIds = [...new Set(fetchedEvents.map(e => e.organizerId))];
 
             // Fetch organizer names
             const organizerMap = {};
@@ -45,7 +55,7 @@ const AdminEventApproval = () => {
                 }
             }
 
-            const eventsWithOrgs = pendingEvents.map(e => ({
+            const eventsWithOrgs = fetchedEvents.map(e => ({
                 ...e,
                 organizerName: organizerMap[e.organizerId]?.name || 'Unknown Organizer',
                 organizerEmail: organizerMap[e.organizerId]?.email || 'No email'
@@ -53,7 +63,7 @@ const AdminEventApproval = () => {
 
             setEvents(eventsWithOrgs);
         } catch (error) {
-            toast.error("Error fetching pending events");
+            toast.error("Error fetching events");
         } finally {
             setLoading(false);
         }
@@ -94,7 +104,7 @@ const AdminEventApproval = () => {
             });
 
             setSelectedEvent(null);
-            await fetchPendingEvents();
+            await fetchEvents();
             toast.success("Event approved successfully!");
         } catch (error) {
             toast.error("Failed to approve event.");
@@ -144,7 +154,7 @@ const AdminEventApproval = () => {
             setSelectedEvent(null);
             setRejectMode(false);
             setRejectionReason('');
-            await fetchPendingEvents();
+            await fetchEvents();
             toast.success("Event rejected.");
         } catch (error) {
             toast.error("Failed to reject event.");
@@ -161,12 +171,21 @@ const AdminEventApproval = () => {
                     <Link to="/admin/dashboard" className="w-8 h-8 bg-white text-black flex items-center justify-center font-black hover:bg-yellow-400 transition-colors">
                         &larr;
                     </Link>
-                    <h1 className="font-black uppercase tracking-tighter text-xl">Event Moderation Queue</h1>
+                    <h1 className="font-black uppercase tracking-tighter text-xl">Event Management</h1>
                 </div>
-                <div className="flex items-center gap-4">
-                    <span className="bg-yellow-400 text-black px-2 py-1 font-black uppercase text-[10px]">
-                        Pending: {events.length}
-                    </span>
+                <div className="flex gap-2">
+                    <button
+                        onClick={() => setCurrentTab('pending')}
+                        className={`px-4 py-2 font-black uppercase text-[10px] border-2 border-white transition-all ${currentTab === 'pending' ? 'bg-yellow-400 text-black scale-105 shadow-[2px_2px_0_white]' : 'bg-transparent text-white hover:bg-gray-800'}`}
+                    >
+                        Pending Approvals
+                    </button>
+                    <button
+                        onClick={() => setCurrentTab('active')}
+                        className={`px-4 py-2 font-black uppercase text-[10px] border-2 border-white transition-all ${currentTab === 'active' ? 'bg-blue-600 text-white scale-105 shadow-[2px_2px_0_white]' : 'bg-transparent text-white hover:bg-gray-800'}`}
+                    >
+                        Active Events
+                    </button>
                 </div>
             </div>
 

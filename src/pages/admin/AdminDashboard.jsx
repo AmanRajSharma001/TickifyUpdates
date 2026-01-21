@@ -140,7 +140,7 @@ const AdminDashboard = () => {
                     pendingApprovals: pendingCount,
                     totalRevenue: totalRevenue,
                     ticketsSold: ticketCount,
-                    pendingSettlements: pendingSettlementsCount
+                    pendingSettlements: settlementsSnapshot.docs.length
                 });
                 setActiveEventsList(activeList);
                 setPendingEventsList(pendingList);
@@ -293,20 +293,20 @@ const AdminDashboard = () => {
                 {/* Stats Grid */}
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                     {[
-                        { label: 'Total Users', value: loading ? '...' : stats.totalUsers.toLocaleString(), icon: '👥', color: 'bg-blue-500' },
-                        { label: 'Active Events', value: loading ? '...' : stats.activeEvents, icon: '📅', color: 'bg-purple-500' },
-                        { label: 'Pending Approvals', value: loading ? '...' : stats.pendingApprovals, icon: '⏳', color: 'bg-yellow-500' },
-                        { label: 'Total Revenue', value: loading ? '...' : `₹${stats.totalRevenue.toLocaleString()}`, icon: '💰', color: 'bg-green-500' },
-                        { label: 'Tickets Sold', value: loading ? '...' : stats.ticketsSold.toLocaleString(), icon: '🎫', color: 'bg-pink-500' },
-                        { label: 'Settlements', value: loading ? '...' : stats.pendingSettlements, icon: '💳', color: 'bg-orange-500' },
+                        { label: 'Total Users', value: loading ? '...' : stats.totalUsers.toLocaleString(), icon: '👥', color: 'bg-blue-500', link: '/admin/users' },
+                        { label: 'Active Events', value: loading ? '...' : stats.activeEvents, icon: '📅', color: 'bg-purple-500', link: '/admin/events' },
+                        { label: 'Pending Approvals', value: loading ? '...' : stats.pendingApprovals, icon: '⏳', color: 'bg-yellow-500', link: '/admin/events' },
+                        { label: 'Total Revenue', value: loading ? '...' : `₹${stats.totalRevenue.toLocaleString()}`, icon: '💰', color: 'bg-green-500', link: '/admin/analytics' },
+                        { label: 'Tickets Sold', value: loading ? '...' : stats.ticketsSold.toLocaleString(), icon: '🎫', color: 'bg-pink-500', link: '/admin/analytics' },
+                        { label: 'Settlements', value: loading ? '...' : stats.pendingSettlements, icon: '💳', color: 'bg-orange-500', link: '/admin/settlements' },
                     ].map((stat, i) => (
-                        <div key={i} className="bg-white border-4 border-black p-4 shadow-[4px_4px_0_black] hover:shadow-[6px_6px_0_black] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all">
+                        <Link to={stat.link} key={i} className="block bg-white border-4 border-black p-4 shadow-[4px_4px_0_black] hover:shadow-[6px_6px_0_black] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all">
                             <div className={`w-10 h-10 ${stat.color} text-white flex items-center justify-center text-xl mb-3 border-2 border-black`}>
                                 {stat.icon}
                             </div>
                             <p className={`text-2xl font-black ${loading ? 'animate-pulse text-gray-400' : ''}`}>{stat.value}</p>
                             <p className="text-xs font-bold uppercase text-gray-500">{stat.label}</p>
-                        </div>
+                        </Link>
                     ))}
                 </div>
 

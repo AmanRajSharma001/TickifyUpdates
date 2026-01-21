@@ -354,24 +354,24 @@ const AdminUsers = () => {
                                                 <div className="flex items-center justify-end gap-2">
                                                     <button
                                                         onClick={() => openModal('view', user)}
-                                                        className="p-2 bg-blue-100 border border-blue-500 text-blue-700 hover:bg-blue-200 transition-colors"
-                                                        title="View"
+                                                        className="px-3 py-1 bg-blue-100 border-2 border-blue-500 text-blue-700 font-bold uppercase text-[10px] hover:bg-blue-200 transition-colors"
+                                                        title="View Details"
                                                     >
-                                                        👁️
+                                                        View
                                                     </button>
                                                     <button
                                                         onClick={() => openModal('edit', user)}
-                                                        className="p-2 bg-yellow-100 border border-yellow-500 text-yellow-700 hover:bg-yellow-200 transition-colors"
-                                                        title="Edit"
+                                                        className="px-3 py-1 bg-yellow-100 border-2 border-yellow-500 text-yellow-700 font-bold uppercase text-[10px] hover:bg-yellow-200 transition-colors"
+                                                        title="Edit User"
                                                     >
-                                                        ✏️
+                                                        Edit
                                                     </button>
                                                     <button
                                                         onClick={() => openModal('delete', user)}
-                                                        className="p-2 bg-red-100 border border-red-500 text-red-700 hover:bg-red-200 transition-colors"
-                                                        title="Delete"
+                                                        className="px-3 py-1 bg-red-100 border-2 border-red-500 text-red-700 font-bold uppercase text-[10px] hover:bg-red-200 transition-colors"
+                                                        title="Delete User"
                                                     >
-                                                        🗑️
+                                                        Delete
                                                     </button>
                                                 </div>
                                             </td>
@@ -514,22 +514,22 @@ const AdminUsers = () => {
                             {(modalMode === 'edit' || modalMode === 'create') && (
                                 <div className="space-y-4">
                                     <div>
-                                        <label className="block text-xs font-black uppercase mb-1">Full Name</label>
-                                        <input type="text" name="displayName" value={formData.displayName} onChange={handleInputChange} className="w-full border-2 border-black p-3 font-bold focus:bg-yellow-50 outline-none" />
+                                        <label className="block text-xs font-black uppercase mb-1 text-black">Full Name</label>
+                                        <input type="text" name="displayName" value={formData.displayName} onChange={handleInputChange} className="w-full bg-gray-100 border-2 border-black p-3 font-bold text-black focus:bg-white focus:shadow-[4px_4px_0_black] outline-none transition-all" />
                                     </div>
                                     <div>
-                                        <label className="block text-xs font-black uppercase mb-1">Email</label>
-                                        <input type="email" name="email" value={formData.email} onChange={handleInputChange} disabled={modalMode === 'edit'} className="w-full border-2 border-black p-3 font-bold focus:bg-yellow-50 outline-none disabled:bg-gray-100" />
+                                        <label className="block text-xs font-black uppercase mb-1 text-black">Email</label>
+                                        <input type="email" name="email" value={formData.email} onChange={handleInputChange} disabled={modalMode === 'edit'} className="w-full bg-gray-100 border-2 border-black p-3 font-bold text-black focus:bg-white focus:shadow-[4px_4px_0_black] outline-none disabled:bg-gray-300 disabled:text-gray-600 transition-all" />
                                     </div>
                                     {modalMode === 'create' && (
                                         <div>
-                                            <label className="block text-xs font-black uppercase mb-1">Password</label>
-                                            <input type="password" name="password" value={formData.password} onChange={handleInputChange} className="w-full border-2 border-black p-3 font-bold focus:bg-yellow-50 outline-none" />
+                                            <label className="block text-xs font-black uppercase mb-1 text-black">Password</label>
+                                            <input type="password" name="password" value={formData.password} onChange={handleInputChange} className="w-full bg-gray-100 border-2 border-black p-3 font-bold text-black focus:bg-white focus:shadow-[4px_4px_0_black] outline-none transition-all" />
                                         </div>
                                     )}
                                     <div>
-                                        <label className="block text-xs font-black uppercase mb-1">Role</label>
-                                        <select name="role" value={formData.role} onChange={handleInputChange} className="w-full border-2 border-black p-3 font-bold bg-white cursor-pointer">
+                                        <label className="block text-xs font-black uppercase mb-1 text-black">Role</label>
+                                        <select name="role" value={formData.role} onChange={handleInputChange} className="w-full bg-gray-100 border-2 border-black p-3 font-bold text-black cursor-pointer focus:bg-white focus:shadow-[4px_4px_0_black] outline-none transition-all">
                                             <option value="user">User</option>
                                             <option value="organizer">Organizer</option>
                                             <option value="scanner">Scanner</option>
@@ -537,8 +537,8 @@ const AdminUsers = () => {
                                         </select>
                                     </div>
                                     <div>
-                                        <label className="block text-xs font-black uppercase mb-1">Status</label>
-                                        <select name="status" value={formData.status} onChange={handleInputChange} className="w-full border-2 border-black p-3 font-bold bg-white cursor-pointer">
+                                        <label className="block text-xs font-black uppercase mb-1 text-black">Status</label>
+                                        <select name="status" value={formData.status} onChange={handleInputChange} className="w-full bg-gray-100 border-2 border-black p-3 font-bold text-black cursor-pointer focus:bg-white focus:shadow-[4px_4px_0_black] outline-none transition-all">
                                             <option value="active">Active</option>
                                             <option value="suspended">Suspended</option>
                                             <option value="pending">Pending</option>
