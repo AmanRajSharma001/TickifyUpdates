@@ -90,15 +90,18 @@ const EventDetails = () => {
     }, [id]);
 
     const handleQuantityChange = (delta) => {
-        setTicketQuantity(Math.max(1, ticketQuantity + delta));
+        setTicketQuantity(prev => {
+            const next = prev + delta;
+            return Math.min(Math.max(1, next), 5);
+        });
     };
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 pt-36 pb-20 flex justify-center items-center">
+            <div className="min-h-screen bg-[var(--color-bg-primary)] pt-36 pb-20 flex justify-center items-center">
                 <div className="animate-pulse flex flex-col items-center">
-                    <div className="h-4 w-48 bg-gray-200 rounded mb-4"></div>
-                    <div className="h-32 w-full max-w-2xl bg-gray-200 rounded"></div>
+                    <div className="h-4 w-48 bg-[var(--color-bg-secondary)] rounded mb-4"></div>
+                    <div className="h-32 w-full max-w-2xl bg-[var(--color-bg-secondary)] rounded"></div>
                 </div>
             </div>
         );
@@ -106,8 +109,8 @@ const EventDetails = () => {
 
     if (!event) {
         return (
-            <div className="min-h-screen bg-gray-50 pt-36 pb-20 flex justify-center items-center">
-                <div className="text-xl font-medium text-gray-500">Event not found.</div>
+            <div className="min-h-screen bg-[var(--color-bg-primary)] pt-36 pb-20 flex justify-center items-center">
+                <div className="text-xl font-medium text-[var(--color-text-secondary)]">Event not found.</div>
             </div>
         );
     }
@@ -122,6 +125,13 @@ const EventDetails = () => {
         return now > endDate;
     })() : false;
 
+    // Helper for date formatting
+    const formatDate = (dateStr) => {
+        if (!dateStr) return '';
+        const d = new Date(dateStr);
+        return d.toLocaleDateString('en-GB'); // dd/mm/yyyy
+    };
+
     return (
         <>
             {event && (
@@ -132,9 +142,9 @@ const EventDetails = () => {
                 />
             )}
 
-            <div className="min-h-screen bg-[#F5F5F5] pt-24 pb-20">
+            <div className="min-h-screen bg-[var(--color-bg-primary)] pt-24 pb-20 neo-pattern">
                 {/* Background Banner Blur (Optional, subtle) */}
-                <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-blue-50/50 to-[#F5F5F5] opacity-50 -z-10"></div>
+                <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-[var(--color-bg-secondary)]/50 to-[var(--color-bg-primary)] opacity-50 -z-10"></div>
 
                 <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
 
@@ -142,26 +152,26 @@ const EventDetails = () => {
                     <div className="mb-8">
                         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
                             <div className="flex-1">
-                                <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
+                                <h1 className="text-3xl md:text-5xl font-black text-[var(--color-text-primary)] mb-4 leading-tight uppercase transform">
                                     {event.title}
                                 </h1>
-                                <div className="flex flex-wrap items-center gap-4 text-sm font-medium text-gray-600">
-                                    <span className="bg-white text-gray-800 px-3 py-1 rounded-full border border-gray-200 text-xs uppercase tracking-wide shadow-sm">
+                                <div className="flex flex-wrap items-center gap-4 text-sm font-black uppercase text-[var(--color-text-secondary)]">
+                                    <span className="bg-[var(--color-bg-surface)] text-[var(--color-text-primary)] px-3 py-1 border-2 border-[var(--color-text-primary)] shadow-[2px_2px_0_var(--color-text-primary)]">
                                         {event.category || 'Event'}
                                     </span>
                                     {event.isVerified && (
-                                        <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide shadow-sm flex items-center gap-1">
+                                        <span className="bg-[var(--color-accent-primary)] text-white px-3 py-1 border-2 border-black shadow-[2px_2px_0_black] flex items-center gap-1">
                                             <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
                                             Verified
                                         </span>
                                     )}
-                                    <span className="flex items-center gap-1 bg-white px-3 py-1 rounded-full border border-gray-200 shadow-sm">
-                                        <svg className="w-4 h-4 text-[#F84464]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path></svg>
+                                    <span className="flex items-center gap-1 bg-[var(--color-bg-surface)] text-[var(--color-text-primary)] px-3 py-1 border-2 border-[var(--color-text-primary)] shadow-[2px_2px_0_var(--color-text-primary)]">
+                                        <svg className="w-4 h-4 text-[var(--color-accent-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path></svg>
                                         {event.location}
                                     </span>
-                                    <span className="flex items-center gap-1 bg-white px-3 py-1 rounded-full border border-gray-200 shadow-sm">
-                                        <svg className="w-4 h-4 text-[#F84464]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                        {event.date}
+                                    <span className="flex items-center gap-1 bg-[var(--color-bg-surface)] text-[var(--color-text-primary)] px-3 py-1 border-2 border-[var(--color-text-primary)] shadow-[2px_2px_0_var(--color-text-primary)]">
+                                        <svg className="w-4 h-4 text-[var(--color-accent-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        {formatDate(event.date)}
                                     </span>
                                 </div>
                             </div>
@@ -172,37 +182,37 @@ const EventDetails = () => {
                         {/* LEFT COLUMN: Main Content */}
                         <div className="flex-1">
                             {/* Main Banner Image */}
-                            <div className="w-full aspect-video md:aspect-[21/9] rounded-2xl overflow-hidden shadow-sm mb-10 bg-white border border-gray-100">
+                            <div className="w-full rounded-none overflow-hidden shadow-[8px_8px_0_black] mb-10 bg-[var(--color-bg-secondary)] border-4 border-black group">
                                 <img
                                     src={event.image || "https://placehold.co/1200x600"}
                                     alt={event.title}
-                                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-700 ease-out"
+                                    className="w-full h-auto max-h-[600px] object-contain mx-auto"
                                 />
                             </div>
 
                             {/* About Section */}
-                            <div className="mb-12">
-                                <h3 className="text-xl font-bold text-gray-900 mb-4 border-l-4 border-[#F84464] pl-4">About the Event</h3>
-                                <p className="text-gray-600 leading-relaxed whitespace-pre-line text-lg">
+                            <div className="mb-12 neo-card bg-[var(--color-bg-surface)] p-6 border-4 border-black shadow-[8px_8px_0_black]">
+                                <h3 className="text-2xl font-black text-[var(--color-text-primary)] mb-4 border-b-4 border-[var(--color-accent-primary)] pb-2 uppercase inline-block">About the Event</h3>
+                                <div className="text-[var(--color-text-primary)] leading-relaxed whitespace-pre-line text-lg font-medium">
                                     {event.description}
-                                </p>
+                                </div>
                             </div>
 
                             {/* Lineup / Artists */}
                             {event.lineup && event.lineup.length > 0 && (
-                                <div className="mb-12">
-                                    <h3 className="text-xl font-bold text-gray-900 mb-6 border-l-4 border-[#F84464] pl-4">Artist Lineup</h3>
+                                <div className="mb-12 neo-card bg-[var(--color-bg-surface)] p-6 border-4 border-black shadow-[8px_8px_0_black]">
+                                    <h3 className="text-2xl font-black text-[var(--color-text-primary)] mb-6 border-b-4 border-[var(--color-accent-primary)] pb-2 uppercase inline-block">Artist Lineup</h3>
                                     <div className="flex flex-wrap gap-8">
                                         {event.lineup.map((artist, idx) => (
-                                            <div key={idx} className="flex flex-col items-center gap-3 w-28">
-                                                <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-white shadow-md bg-gray-200 hover:scale-105 transition-transform duration-300">
-                                                    <div className="w-full h-full flex items-center justify-center bg-gray-100 text-2xl font-bold text-gray-400">
+                                            <div key={idx} className="flex flex-col items-center gap-3 w-32 group">
+                                                <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-black bg-[var(--color-bg-secondary)] shadow-[4px_4px_0_black] group-hover:scale-105 transition-transform duration-300">
+                                                    <div className="w-full h-full flex items-center justify-center bg-[var(--color-bg-secondary)] text-3xl font-black text-[var(--color-text-secondary)]">
                                                         {artist.charAt(0)}
                                                     </div>
                                                 </div>
                                                 <div className="text-center">
-                                                    <div className="font-bold text-gray-900 text-sm">{artist}</div>
-                                                    <div className="text-[10px] text-gray-500 uppercase tracking-widest mt-1">Artist</div>
+                                                    <div className="font-black text-[var(--color-text-primary)] text-sm uppercase">{artist}</div>
+                                                    <div className="text-[10px] text-[var(--color-accent-secondary)] uppercase font-bold tracking-widest mt-1">Artist</div>
                                                 </div>
                                             </div>
                                         ))}
@@ -210,10 +220,10 @@ const EventDetails = () => {
                                 </div>
                             )}
 
-                            {/* Terms & Info (Static for now to match minimal feel) */}
-                            <div className="mb-12 p-6 bg-white rounded-xl border border-gray-100 shadow-sm">
-                                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-widest mb-4">Terms & Conditions</h3>
-                                <ul className="list-disc pl-5 space-y-2 text-sm text-gray-600 marker:text-[#F84464]">
+                            {/* Terms & Info */}
+                            <div className="mb-12 p-6 bg-[var(--color-bg-secondary)] border-4 border-black shadow-[8px_8px_0_black]">
+                                <h3 className="text-sm font-black text-[var(--color-text-primary)] uppercase tracking-widest mb-4">Terms & Conditions</h3>
+                                <ul className="list-disc pl-5 space-y-2 text-sm font-bold text-[var(--color-text-secondary)] marker:text-[var(--color-accent-primary)]">
                                     <li>Tickets cannot be exchanged or refunded, but you can resell them on our marketplace.</li>
                                     <li>An Internet handling fee per ticket may be levied.</li>
                                     <li>Please check the total amount before payment.</li>
@@ -225,49 +235,49 @@ const EventDetails = () => {
                         {/* RIGHT COLUMN: Booking Sidebar (Sticky) */}
                         <div className="w-full lg:w-[380px] shrink-0">
                             <div className="sticky top-28 space-y-6">
-                                <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 checkout-card">
+                                <div className="bg-[var(--color-bg-surface)] p-6 border-4 border-black shadow-[12px_12px_0_black] checkout-card">
                                     {/* Ticket Selection */}
                                     {event.tickets && event.tickets.length > 0 ? (
                                         <>
                                             <div className="mb-6">
-                                                <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-3">Select Category</label>
+                                                <label className="block text-sm font-black text-[var(--color-text-primary)] uppercase tracking-wide mb-3">Select Category</label>
                                                 <div className="space-y-3">
                                                     {event.tickets.map((ticket, index) => (
                                                         <div
                                                             key={ticket.id || index}
                                                             onClick={() => setSelectedTicket(ticket.id || index)}
-                                                            className={`cursor-pointer p-4 rounded-lg border transition-all flex justify-between items-center group
+                                                            className={`cursor-pointer p-4 border-4 transition-all flex justify-between items-center group
                                                             ${(selectedTicket === (ticket.id || index))
-                                                                    ? 'border-[#F84464] bg-red-50 ring-1 ring-[#F84464] shadow-sm'
-                                                                    : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'}`}
+                                                                    ? 'border-black bg-[var(--color-accent-secondary)]/10 ring-2 ring-black shadow-[4px_4px_0_black]'
+                                                                    : 'border-black bg-transparent hover:bg-[var(--color-bg-secondary)] hover:shadow-[2px_2px_0_black]'}`}
                                                         >
                                                             <div>
-                                                                <div className="font-bold text-gray-900">{ticket.name}</div>
+                                                                <div className="font-black text-[var(--color-text-primary)] uppercase">{ticket.name}</div>
                                                                 {ticket.description && (
-                                                                    <div className="text-xs text-gray-500 mt-0.5 max-w-[150px] truncate">{ticket.description}</div>
+                                                                    <div className="text-xs font-bold text-[var(--color-text-secondary)] mt-0.5 max-w-[150px] truncate">{ticket.description}</div>
                                                                 )}
                                                             </div>
-                                                            <div className="font-bold text-[#F84464]">₹{ticket.price}</div>
+                                                            <div className="font-black text-[var(--color-accent-primary)]">₹{ticket.price}</div>
                                                         </div>
                                                     ))}
                                                 </div>
                                             </div>
 
                                             {/* Quantity */}
-                                            <div className="flex items-center justify-between mb-8 pb-6 border-b border-gray-100">
-                                                <span className="text-sm font-bold text-gray-500 uppercase">Quantity</span>
+                                            <div className="flex items-center justify-between mb-8 pb-6 border-b-4 border-black">
+                                                <span className="text-sm font-black text-[var(--color-text-primary)] uppercase">Quantity</span>
                                                 <div className="flex items-center gap-3">
-                                                    <button onClick={() => handleQuantityChange(-1)} className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center font-bold text-gray-600 transition">-</button>
-                                                    <span className="w-6 text-center font-bold text-gray-900">{ticketQuantity}</span>
-                                                    <button onClick={() => handleQuantityChange(1)} className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center font-bold text-gray-600 transition">+</button>
+                                                    <button onClick={() => handleQuantityChange(-1)} className="w-8 h-8 bg-[var(--color-bg-secondary)] border-2 border-black shadow-[2px_2px_0_black] hover:translate-y-[1px] hover:shadow-none flex items-center justify-center font-black text-[var(--color-text-primary)] transition active:bg-black active:text-white">-</button>
+                                                    <span className="w-6 text-center font-black text-[var(--color-text-primary)] text-xl">{ticketQuantity}</span>
+                                                    <button onClick={() => handleQuantityChange(1)} className="w-8 h-8 bg-[var(--color-bg-secondary)] border-2 border-black shadow-[2px_2px_0_black] hover:translate-y-[1px] hover:shadow-none flex items-center justify-center font-black text-[var(--color-text-primary)] transition active:bg-black active:text-white">+</button>
                                                 </div>
                                             </div>
 
                                             {/* Total & Action */}
                                             <div className="space-y-4">
                                                 <div className="flex justify-between items-end">
-                                                    <span className="text-sm font-medium text-gray-600">Total Amount</span>
-                                                    <span className="text-2xl font-bold text-gray-900">₹{totalPrice}</span>
+                                                    <span className="text-sm font-black text-[var(--color-text-secondary)] uppercase">Total Amount</span>
+                                                    <span className="text-3xl font-black text-[var(--color-text-primary)]">₹{totalPrice}</span>
                                                 </div>
 
                                                 <button
@@ -317,23 +327,22 @@ const EventDetails = () => {
                                                         }
                                                     }}
                                                     disabled={isRegistrationClosed}
-                                                    className={`w-full py-4 rounded-lg text-white font-bold text-lg shadow-md transition-all transform hover:scale-[1.02] active:scale-[0.98]
-                                                    ${isRegistrationClosed ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#e50914] hover:bg-[#b00710] shadow-red-200'}`}
-                                                    style={{ backgroundColor: isRegistrationClosed ? undefined : '#F84464' }}
+                                                    className={`w-full py-4 text-white font-black text-xl shadow-[4px_4px_0_black] border-2 border-black transition-all transform hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0_black] active:translate-x-0 active:translate-y-0 active:shadow-none uppercase
+                                                    ${isRegistrationClosed ? 'bg-[var(--color-bg-secondary)] text-[var(--color-text-muted)] cursor-not-allowed border-dashed' : 'bg-[var(--color-accent-primary)] hover:bg-[var(--color-accent-secondary)]'}`}
                                                 >
-                                                    {isRegistrationClosed ? 'Sold Out' : 'Book Tickets'}
+                                                    {isRegistrationClosed ? 'Sold Out' : 'Grab Passes'}
                                                 </button>
                                             </div>
                                         </>
                                     ) : (
-                                        <div className="text-center py-8 text-gray-500">
+                                        <div className="text-center py-8 text-[var(--color-text-secondary)] font-bold">
                                             No tickets available currently.
                                         </div>
                                     )}
                                 </div>
 
                                 <div className="text-center">
-                                    <p className="text-xs text-gray-400">Verified & Secured by Tickify</p>
+                                    <p className="text-xs font-bold text-[var(--color-text-muted)] uppercase tracking-widest">Verified & Secured by Tickify</p>
                                 </div>
                             </div>
                         </div>

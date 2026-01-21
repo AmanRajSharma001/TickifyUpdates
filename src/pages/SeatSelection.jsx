@@ -107,9 +107,9 @@ const SeatSelection = () => {
         if (isSelected) {
             setSelectedSeats(selectedSeats.filter(s => s.id !== seat.id));
         } else {
-            // Limit to 6 seats max
-            if (selectedSeats.length >= 6) {
-                toast.error("You can only select up to 6 seats.");
+            // Limit to 5 seats max
+            if (selectedSeats.length >= 5) {
+                toast.error("You can only select up to 5 seats.");
                 return;
             }
             setSelectedSeats([...selectedSeats, {
