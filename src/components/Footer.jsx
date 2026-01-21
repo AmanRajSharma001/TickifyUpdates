@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Instagram, Linkedin, Twitter, Mail, Phone } from 'lucide-react';
 
 const Footer = () => {
     return (
@@ -20,16 +21,28 @@ const Footer = () => {
 
                         {/* Social Links */}
                         <div className="flex gap-4 mb-6 pl-4">
-                            <a href="https://www.linkedin.com/in/saransh-mittal-172556395/" target="_blank" rel="noopener noreferrer" className="text-2xl hover:scale-110 transition-transform" title="LinkedIn">👔</a>
-                            <a href="https://www.instagram.com/ticki_fy/" target="_blank" rel="noopener noreferrer" className="text-2xl hover:scale-110 transition-transform" title="Instagram">📸</a>
-                            <a href="https://x.com/Tickify134140" target="_blank" rel="noopener noreferrer" className="text-2xl hover:scale-110 transition-transform" title="X (Twitter)">🐦</a>
+                            <a href="https://www.linkedin.com/in/saransh-mittal-172556395/" target="_blank" rel="noopener noreferrer" className="p-2 bg-black text-white hover:bg-[var(--color-accent-primary)] hover:translate-x-[-2px] hover:translate-y-[-2px] shadow-[4px_4px_0_var(--color-text-primary)] transition-all" title="LinkedIn">
+                                <Linkedin size={20} strokeWidth={3} />
+                            </a>
+                            <a href="https://www.instagram.com/ticki_fy/" target="_blank" rel="noopener noreferrer" className="p-2 bg-black text-white hover:bg-[var(--color-accent-primary)] hover:translate-x-[-2px] hover:translate-y-[-2px] shadow-[4px_4px_0_var(--color-text-primary)] transition-all" title="Instagram">
+                                <Instagram size={20} strokeWidth={3} />
+                            </a>
+                            <a href="https://x.com/Tickify134140" target="_blank" rel="noopener noreferrer" className="p-2 bg-black text-white hover:bg-[var(--color-accent-primary)] hover:translate-x-[-2px] hover:translate-y-[-2px] shadow-[4px_4px_0_var(--color-text-primary)] transition-all" title="X (Twitter)">
+                                <Twitter size={20} strokeWidth={3} />
+                            </a>
                         </div>
 
                         {/* Contact Info */}
                         <div className="space-y-2 text-sm font-bold text-[var(--color-text-secondary)] pl-4">
-                            <a href="mailto:Contacttickify@gmail.com" className="block hover:text-[var(--color-text-primary)] hover:underline">📧 Contacttickify@gmail.com</a>
-                            <a href="tel:9636573425" className="block hover:text-[var(--color-text-primary)] hover:underline">📱 +91 9636573425</a>
-                            <a href="tel:9172289897" className="block hover:text-[var(--color-text-primary)] hover:underline">📱 +91 9172289897</a>
+                            <a href="mailto:Contacttickify@gmail.com" className="flex items-center gap-2 hover:text-[var(--color-text-primary)] hover:underline">
+                                <Mail size={16} /> Contacttickify@gmail.com
+                            </a>
+                            <a href="tel:9636573425" className="flex items-center gap-2 hover:text-[var(--color-text-primary)] hover:underline">
+                                <Phone size={16} /> +91 9636573425
+                            </a>
+                            <a href="tel:9172289897" className="flex items-center gap-2 hover:text-[var(--color-text-primary)] hover:underline">
+                                <Phone size={16} /> +91 9172289897
+                            </a>
                         </div>
                     </div>
 

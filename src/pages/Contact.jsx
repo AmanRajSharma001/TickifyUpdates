@@ -4,6 +4,7 @@ import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { sendContactConfirmationEmail } from '../services/brevoService';
 import toast from 'react-hot-toast';
 import SEOHead from '../components/SEOHead';
+import { Instagram, Linkedin, Twitter, Mail, Phone, Globe, MapPin, Clock } from 'lucide-react';
 
 const Contact = () => {
     const [formData, setFormData] = useState({
@@ -141,7 +142,9 @@ const Contact = () => {
                         </p>
 
                         <div className="neo-card bg-[var(--color-bg-surface)] border-4 border-[var(--color-text-primary)] p-6 flex items-center gap-6 shadow-[8px_8px_0_var(--color-text-primary)]">
-                            <div className="w-12 h-12 bg-blue-500 border-2 border-black flex items-center justify-center text-2xl shrink-0">📧</div>
+                            <div className="w-12 h-12 bg-blue-500 border-2 border-black flex items-center justify-center text-white shrink-0 shadow-[2px_2px_0_black]">
+                                <Mail size={24} strokeWidth={3} />
+                            </div>
                             <div className="overflow-hidden">
                                 <p className="text-xs font-black uppercase text-[var(--color-text-secondary)]">Email Us</p>
                                 <a href="mailto:Contacttickify@gmail.com" className="text-lg md:text-xl font-black text-[var(--color-text-primary)] hover:underline break-all">Contacttickify@gmail.com</a>
@@ -149,7 +152,9 @@ const Contact = () => {
                         </div>
 
                         <div className="neo-card bg-[var(--color-bg-surface)] border-4 border-[var(--color-text-primary)] p-6 flex items-center gap-6 shadow-[8px_8px_0_var(--color-text-primary)]">
-                            <div className="w-12 h-12 bg-green-500 border-2 border-black flex items-center justify-center text-2xl shrink-0">📱</div>
+                            <div className="w-12 h-12 bg-green-500 border-2 border-black flex items-center justify-center text-white shrink-0 shadow-[2px_2px_0_black]">
+                                <Phone size={24} strokeWidth={3} />
+                            </div>
                             <div>
                                 <p className="text-xs font-black uppercase text-[var(--color-text-secondary)]">Call Us</p>
                                 <div className="flex flex-col">
@@ -160,19 +165,29 @@ const Contact = () => {
                         </div>
 
                         <div className="neo-card bg-[var(--color-bg-surface)] border-4 border-[var(--color-text-primary)] p-6 flex items-center gap-6 shadow-[8px_8px_0_var(--color-text-primary)]">
-                            <div className="w-12 h-12 bg-pink-500 border-2 border-black flex items-center justify-center text-2xl shrink-0">🌐</div>
+                            <div className="w-12 h-12 bg-pink-500 border-2 border-black flex items-center justify-center text-white shrink-0 shadow-[2px_2px_0_black]">
+                                <Globe size={24} strokeWidth={3} />
+                            </div>
                             <div>
                                 <p className="text-xs font-black uppercase text-[var(--color-text-secondary)]">Follow Us</p>
                                 <div className="flex gap-4 mt-1">
-                                    <a href="https://www.linkedin.com/in/saransh-mittal-172556395/" target="_blank" rel="noopener noreferrer" className="text-2xl hover:scale-110 transition-transform" title="LinkedIn">👔</a>
-                                    <a href="https://www.instagram.com/ticki_fy/" target="_blank" rel="noopener noreferrer" className="text-2xl hover:scale-110 transition-transform" title="Instagram">📸</a>
-                                    <a href="https://x.com/Tickify134140" target="_blank" rel="noopener noreferrer" className="text-2xl hover:scale-110 transition-transform" title="X (Twitter)">🐦</a>
+                                    <a href="https://www.linkedin.com/in/saransh-mittal-172556395/" target="_blank" rel="noopener noreferrer" className="p-2 bg-black text-white hover:bg-[var(--color-accent-primary)] hover:translate-x-[-2px] hover:translate-y-[-2px] shadow-[4px_4px_0_black] transition-all" title="LinkedIn">
+                                        <Linkedin size={20} strokeWidth={3} />
+                                    </a>
+                                    <a href="https://www.instagram.com/ticki_fy/" target="_blank" rel="noopener noreferrer" className="p-2 bg-black text-white hover:bg-[var(--color-accent-primary)] hover:translate-x-[-2px] hover:translate-y-[-2px] shadow-[4px_4px_0_black] transition-all" title="Instagram">
+                                        <Instagram size={20} strokeWidth={3} />
+                                    </a>
+                                    <a href="https://x.com/Tickify134140" target="_blank" rel="noopener noreferrer" className="p-2 bg-black text-white hover:bg-[var(--color-accent-primary)] hover:translate-x-[-2px] hover:translate-y-[-2px] shadow-[4px_4px_0_black] transition-all" title="X (Twitter)">
+                                        <Twitter size={20} strokeWidth={3} />
+                                    </a>
                                 </div>
                             </div>
                         </div>
 
                         <div className="neo-card bg-[var(--color-bg-surface)] border-4 border-[var(--color-text-primary)] p-6 flex items-center gap-6 shadow-[8px_8px_0_var(--color-text-primary)]">
-                            <div className="w-12 h-12 bg-red-500 border-2 border-black flex items-center justify-center text-2xl shrink-0">📍</div>
+                            <div className="w-12 h-12 bg-red-500 border-2 border-black flex items-center justify-center text-white shrink-0 shadow-[2px_2px_0_black]">
+                                <MapPin size={24} strokeWidth={3} />
+                            </div>
                             <div>
                                 <p className="text-xs font-black uppercase text-[var(--color-text-secondary)]">Visit Us</p>
                                 <p className="text-xl font-black text-[var(--color-text-primary)]">Bangalore, India</p>
@@ -180,7 +195,9 @@ const Contact = () => {
                         </div>
 
                         <div className="neo-card bg-[var(--color-bg-surface)] border-4 border-[var(--color-text-primary)] p-6 flex items-center gap-6 shadow-[8px_8px_0_var(--color-text-primary)]">
-                            <div className="w-12 h-12 bg-purple-500 border-2 border-black flex items-center justify-center text-2xl shrink-0">⏰</div>
+                            <div className="w-12 h-12 bg-purple-500 border-2 border-black flex items-center justify-center text-white shrink-0 shadow-[2px_2px_0_black]">
+                                <Clock size={24} strokeWidth={3} />
+                            </div>
                             <div>
                                 <p className="text-xs font-black uppercase text-[var(--color-text-secondary)]">Response Time</p>
                                 <p className="text-xl font-black text-[var(--color-text-primary)]">Within 24-48 hours</p>
