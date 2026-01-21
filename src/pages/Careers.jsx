@@ -6,28 +6,27 @@ import toast from 'react-hot-toast';
 
 const jobs = [
     {
-        id: 'marketing-manager-01',
-        title: 'Marketing Manager',
+        id: 'marketing-intern-01',
+        title: 'Marketing Intern',
         department: 'Marketing',
         location: 'Remote / Mumbai, India',
-        type: 'Full-Time',
-        salary: '₹8L - ₹15L per annum',
-        posted: '2026-01-08',
-        description: 'We are looking for a creative and data-driven Marketing Manager to lead our brand campaigns, grow our user base, and establish Tickify as the go-to platform for event discovery in India.',
+        type: 'Internship',
+        salary: '₹8k - ₹10k per month',
+        posted: '2026-01-21',
+        description: 'We are looking for a creative and energetic Marketing Intern to help grow our brand presence, support our marketing campaigns, and learn the ropes of event discovery in India.',
         responsibilities: [
-            'Develop and execute multi-channel marketing strategies (digital, social, influencer).',
-            'Manage paid advertising campaigns across Google, Meta, and programmatic platforms.',
-            'Collaborate with design and content teams to produce compelling campaigns.',
-            'Analyze campaign performance and optimize for ROI.',
-            'Build partnerships with event organizers, artists, and brands.',
-            'Lead a team of marketing associates and interns.'
+            'Assist in executing multi-channel marketing strategies (social, influencer).',
+            'Help manage social media communities and engagement.',
+            'Collaborate with design and content teams for campaign assets.',
+            'Support research on trends and potential organizer partnerships.',
+            'Assist in data entry and basic performance tracking.'
         ],
         requirements: [
-            "4+ years of experience in digital marketing, preferably in events, entertainment, or tech.",
-            "Proven track record of running successful growth campaigns.",
-            "Strong analytical skills with experience in GA4, Mixpanel, or similar.",
-            "Excellent communication and leadership abilities.",
-            "Bachelor's degree in Marketing, Business, or related field."
+            "Currently pursuing or recently completed a degree in Marketing, Business, or related fields.",
+            "Passion for music, events, and entertainment.",
+            "Strong communication skills and creativity.",
+            "Basic understanding of social media platforms (Instagram, LinkedIn, X).",
+            "Ability to work in a fast-paced startup environment."
         ]
     }
 ];
