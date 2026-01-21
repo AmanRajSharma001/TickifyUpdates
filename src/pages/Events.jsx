@@ -355,9 +355,7 @@ const Events = () => {
                                                     <div className={`neo-card bg-[var(--color-bg-surface)] overflow-hidden group h-full flex flex-col ${isRegistrationClosed(event) ? 'opacity-70 grayscale' : ''}`}>
                                                         <div className="h-48 overflow-hidden relative border-b-2 border-[var(--color-text-primary)]">
                                                             <img src={event.image || "https://via.placeholder.com/400x200?text=No+Image"} alt={event.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
-                                                            <div className="absolute top-2 right-2 neo-btn bg-[var(--color-accent-primary)] text-white text-xs px-2 py-1 rotate-3">
-                                                                {event.price ? (typeof event.price === 'number' ? `₹${event.price}` : event.price) : 'Free'}
-                                                            </div>
+
                                                             {isRegistrationClosed(event) && (
                                                                 <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
                                                                     <span className="bg-red-500 text-white font-black px-4 py-2 border-2 border-white shadow-[4px_4px_0_black] -rotate-6 uppercase">
@@ -367,7 +365,12 @@ const Events = () => {
                                                             )}
                                                         </div>
                                                         <div className="p-4 flex-1 flex flex-col">
-                                                            <div className="text-xs font-black text-[var(--color-accent-secondary)] mb-1 uppercase tracking-widest">{event.category || 'General'}</div>
+                                                            <div className="flex justify-between items-start mb-1">
+                                                                <div className="text-xs font-black text-[var(--color-accent-secondary)] uppercase tracking-widest">{event.category || 'General'}</div>
+                                                                <div className="neo-badge text-[10px] bg-[var(--color-accent-primary)] text-white px-2 py-1 font-black transform rotate-2">
+                                                                    {event.price ? (typeof event.price === 'number' ? `₹${event.price}` : event.price) : 'Free'}
+                                                                </div>
+                                                            </div>
                                                             <h3 className="text-xl font-black text-[var(--color-text-primary)] mb-2 leading-tight">{event.title}</h3>
                                                             <div className="mt-auto flex items-center justify-between">
                                                                 <span className="text-sm font-bold text-[var(--color-text-muted)]">{event.date}</span>

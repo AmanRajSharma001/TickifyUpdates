@@ -489,7 +489,10 @@ export default function BubbleMenu({
                                         'whitespace-nowrap overflow-hidden',
                                         'hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[10px_10px_0_black]'
                                     ].join(' ')}
-                                    onClick={() => handleToggle()} // Close menu on click
+                                    onClick={() => {
+                                        handleToggle();
+                                        window.scrollTo({ top: 0, behavior: 'instant' });
+                                    }} // Close menu on click and scroll to top
                                     style={{
                                         ['--item-rot']: `${item.rotation ?? 0}deg`,
                                         ['--pill-bg']: 'var(--color-bg-surface)',
