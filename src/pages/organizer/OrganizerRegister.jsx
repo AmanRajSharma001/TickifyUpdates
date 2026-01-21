@@ -344,7 +344,7 @@ const OrganizerRegister = () => {
                                 <input type="checkbox" id="terms" name="termsAccepted" checked={formData.termsAccepted} onChange={handleInputChange}
                                     className="w-5 h-5 border-2 border-black mt-0.5 accent-[var(--color-accent-primary)] cursor-pointer" />
                                 <label htmlFor="terms" className="text-sm font-bold text-[var(--color-text-secondary)]">
-                                    I accept the Terms & Conditions and Privacy Policy
+                                    I accept the <Link to="/terms" target="_blank" className="underline decoration-2 hover:text-[var(--color-accent-primary)]">Terms & Conditions</Link> and <Link to="/privacy" target="_blank" className="underline decoration-2 hover:text-[var(--color-accent-primary)]">Privacy Policy</Link>
                                 </label>
                             </div>
 

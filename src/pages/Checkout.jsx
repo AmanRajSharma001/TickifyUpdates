@@ -542,7 +542,7 @@ const Checkout = () => {
                                         className="w-5 h-5 border-2 border-black rounded focus:ring-0 mt-1 cursor-pointer accent-black"
                                     />
                                     <span className="text-xs font-bold text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)]">
-                                        I agree to the <a href="/terms" className="underline decoration-2">Terms and Conditions</a> and <a href="/privacy" className="underline decoration-2">Privacy Policy</a>.
+                                        I agree to the <a href="/terms" target="_blank" rel="noopener noreferrer" className="underline decoration-2">Terms and Conditions</a> and <a href="/privacy" target="_blank" rel="noopener noreferrer" className="underline decoration-2">Privacy Policy</a>.
                                     </span>
                                 </label>
 

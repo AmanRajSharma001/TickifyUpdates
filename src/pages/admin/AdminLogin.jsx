@@ -171,7 +171,7 @@ const AdminLogin = () => {
                             </label>
                             <input
                                 type="email"
-                                placeholder="admin@tickify.com"
+                                placeholder="Enter your admin email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
