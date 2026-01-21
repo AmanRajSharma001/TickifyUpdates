@@ -46,9 +46,7 @@ const Stats = () => {
     }, []);
 
     const formatNumber = (num, base) => {
-        if (num === 0) return `${base}+`;
-        if (num < 10) return `${num + base}+`;
-        return `${num}+`;
+        return `${Math.max(num, base)}+`;
     };
 
     return (
@@ -67,7 +65,7 @@ const Stats = () => {
             </div>
             <div className="neo-card bg-[var(--color-bg-secondary)] p-8 -rotate-2 hover:rotate-0 transition-transform flex flex-col items-center min-w-[200px]">
                 <span className="block text-5xl md:text-6xl font-black text-[var(--color-success)] mb-2">
-                    {loading ? '...' : formatNumber(stats.organizers, 5)}
+                    {loading ? '...' : formatNumber(stats.organizers, 20)}
                 </span>
                 <span className="text-xl font-bold uppercase text-[var(--color-text-primary)]">Organizers</span>
             </div>

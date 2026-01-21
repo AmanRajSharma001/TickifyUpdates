@@ -50,10 +50,8 @@ const OrganizerCTA = () => {
         fetchOrganizerStats();
     }, []);
 
-    const formatValue = (val, base, suffix = '') => {
-        if (val === 0) return `${base}${suffix}+`;
-        if (val < base) return `${val + base}${suffix}+`;
-        return `${val}${suffix}+`;
+    const formatValue = (val, base) => {
+        return `${Math.max(val, base)}+`;
     };
 
     const formatCurrency = (val) => {
@@ -144,7 +142,7 @@ const OrganizerCTA = () => {
                         {/* Stats Row */}
                         <div className="mt-4 md:mt-6 grid grid-cols-3 gap-3 md:gap-4">
                             {[
-                                { value: loading ? '...' : formatValue(stats.organizers, 100), label: 'Organizers' },
+                                { value: loading ? '...' : formatValue(stats.organizers, 20), label: 'Organizers' },
                                 { value: loading ? '...' : formatValue(stats.ticketsSold, 1000), label: 'Tickets Sold' },
                                 { value: loading ? '...' : formatCurrency(stats.payouts), label: 'Payouts Made' }
                             ].map((stat, idx) => (
