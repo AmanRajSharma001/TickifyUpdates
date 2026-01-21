@@ -389,6 +389,7 @@ const Profile = () => {
                                 <nav className="space-y-2">
                                     {[
                                         { id: 'info', label: 'Personal Info', icon: '👤' },
+                                        { id: 'tickets', label: 'My Tickets', icon: '🎟️' },
                                         { id: 'security', label: 'Security', icon: '🔒' },
                                         { id: 'notifications', label: 'Notifications', icon: '🔔' },
                                         { id: 'history', label: 'Order History', icon: '📜' },
@@ -400,6 +401,8 @@ const Profile = () => {
                                             onClick={() => {
                                                 if (tab.id === 'logout') {
                                                     handleLogout();
+                                                } else if (tab.id === 'tickets') {
+                                                    navigate('/my-tickets');
                                                 } else {
                                                     setActiveTab(tab.id);
                                                     setMessage({ type: '', text: '' });
