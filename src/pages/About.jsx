@@ -52,33 +52,27 @@ const About = () => {
                         </p>
                     </div>
 
-                    {/* Stats Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {[
-                            { label: "Events Hosted", value: "10K+", color: "bg-blue-400" },
-                            { label: "Happy Users", value: "2M+", color: "bg-green-400" },
-                            { label: "Countries", value: "45", color: "bg-purple-400" }
-                        ].map((stat, i) => (
-                            <div key={i} className={`${stat.color} border-4 border-[var(--color-text-primary)] p-6 text-center transform rotate-1 hover:rotate-0 transition-transform`}>
-                                <h3 className="text-5xl font-black badge-accent text-gray-900 mb-2">{stat.value}</h3>
-                                <p className="font-bold uppercase badge-accent text-gray-900 tracking-widest">{stat.label}</p>
-                            </div>
-                        ))}
-                    </div>
-
                     {/* Team Section */}
                     <div>
                         <h2 className="text-4xl font-black uppercase text-center mb-10 text-[var(--color-text-primary)]">The Squad</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                            {[1, 2, 3, 4].map((member) => (
-                                <div key={member} className="neo-card bg-[var(--color-bg-surface)] border-4 border-[var(--color-text-primary)] p-4 text-center group">
-                                    <div className="w-full h-40 bg-gray-200 border-2 border-[var(--color-text-primary)] mb-4 overflow-hidden relative">
-                                        <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=Member${member}`} alt="Team" className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
-                                    </div>
-                                    <h3 className="font-black uppercase text-lg text-[var(--color-text-primary)]">Dev {member}</h3>
-                                    <p className="text-xs font-bold text-[var(--color-text-secondary)] uppercase">Core Engineer</p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+                            {/* Saransh Mittal */}
+                            <div className="neo-card bg-[var(--color-bg-surface)] border-4 border-[var(--color-text-primary)] p-6 text-center group shadow-[8px_8px_0_var(--color-text-primary)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[10px_10px_0_var(--color-accent-primary)] transition-all">
+                                <div className="w-full h-48 bg-blue-100 border-2 border-[var(--color-text-primary)] mb-4 overflow-hidden relative">
+                                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Saransh" alt="Saransh Mittal" className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
                                 </div>
-                            ))}
+                                <h3 className="font-black uppercase text-xl text-[var(--color-text-primary)]">Saransh Mittal</h3>
+                                <p className="text-sm font-bold text-[var(--color-accent-primary)] uppercase">Co-founder & CEO</p>
+                            </div>
+
+                            {/* Madhav Arora */}
+                            <div className="neo-card bg-[var(--color-bg-surface)] border-4 border-[var(--color-text-primary)] p-6 text-center group shadow-[8px_8px_0_var(--color-text-primary)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[10px_10px_0_var(--color-accent-secondary)] transition-all">
+                                <div className="w-full h-48 bg-purple-100 border-2 border-[var(--color-text-primary)] mb-4 overflow-hidden relative">
+                                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Madhav" alt="Madhav Arora" className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
+                                </div>
+                                <h3 className="font-black uppercase text-xl text-[var(--color-text-primary)]">Madhav Arora</h3>
+                                <p className="text-sm font-bold text-[var(--color-accent-secondary)] uppercase">CTO & Co-founder</p>
+                            </div>
                         </div>
                     </div>
 

@@ -69,7 +69,7 @@ const Home = () => {
         <>
             <SEOHead
                 title="Book Event Tickets Online"
-                description="Tickify is India's #1 event ticketing platform. Discover and book tickets for concerts, festivals, conferences, workshops, and live events. Zero hidden fees, instant booking confirmation. Trusted by 2M+ users."
+                description="Tickify is India's #1 event ticketing platform. Discover and book tickets for concerts, festivals, conferences, workshops, and live events. Zero hidden fees, instant booking confirmation."
                 keywords={[
                     'book event tickets',
                     'online ticket booking',

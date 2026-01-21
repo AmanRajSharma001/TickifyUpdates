@@ -38,10 +38,10 @@ const Footer = () => {
                                 <Mail size={16} /> Contacttickify@gmail.com
                             </a>
                             <a href="tel:9636573425" className="flex items-center gap-2 hover:text-[var(--color-text-primary)] hover:underline">
-                                <Phone size={16} /> +91 9636573425
+                                <Phone size={16} /> +91 9636573425 (Saransh)
                             </a>
-                            <a href="tel:9172289897" className="flex items-center gap-2 hover:text-[var(--color-text-primary)] hover:underline">
-                                <Phone size={16} /> +91 9172289897
+                            <a href="tel:9877275894" className="flex items-center gap-2 hover:text-[var(--color-text-primary)] hover:underline">
+                                <Phone size={16} /> +91 9877275894 (Madhav)
                             </a>
                         </div>
                     </div>

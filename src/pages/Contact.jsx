@@ -158,8 +158,8 @@ const Contact = () => {
                             <div>
                                 <p className="text-xs font-black uppercase text-[var(--color-text-secondary)]">Call Us</p>
                                 <div className="flex flex-col">
-                                    <a href="tel:9636573425" className="text-lg font-black text-[var(--color-text-primary)] hover:underline">+91 9636573425</a>
-                                    <a href="tel:9172289897" className="text-lg font-black text-[var(--color-text-primary)] hover:underline">+91 9172289897</a>
+                                    <a href="tel:9636573425" className="text-lg font-black text-[var(--color-text-primary)] hover:underline">+91 9636573425 (Saransh Mittal)</a>
+                                    <a href="tel:9877275894" className="text-lg font-black text-[var(--color-text-primary)] hover:underline">+91 9877275894 (Madhav Arora)</a>
                                 </div>
                             </div>
                         </div>
