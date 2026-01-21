@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { db } from '../../config/firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import toast from 'react-hot-toast';
 
 const OrganizerProfile = () => {
-    const { currentUser } = useAuth();
+    const { currentUser, logout } = useAuth();
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [profileData, setProfileData] = useState({
@@ -53,6 +55,17 @@ const OrganizerProfile = () => {
 
         fetchProfile();
     }, [currentUser]);
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+            navigate('/login');
+            toast.success('Logged out successfully');
+        } catch (error) {
+            console.error(error);
+            toast.error('Failed to log out');
+        }
+    };
 
     const handleSave = async () => {
         if (!currentUser) return;
@@ -122,6 +135,14 @@ const OrganizerProfile = () => {
                                 className="w-full bg-transparent font-bold text-sm resize-none focus:outline-none min-h-[100px] text-[var(--color-text-primary)]"
                             />
                         </div>
+
+                        {/* Logout Button */}
+                        <button
+                            onClick={handleLogout}
+                            className="w-full neo-btn bg-[var(--color-error)] text-white p-4 border-4 border-black shadow-[4px_4px_0_black] font-black uppercase hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0_black] transition-all flex items-center justify-center gap-2"
+                        >
+                            <span>🚪</span> Log Out
+                        </button>
                     </div>
 
                     {/* Right Column: Forms */}
@@ -214,7 +235,7 @@ const OrganizerProfile = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

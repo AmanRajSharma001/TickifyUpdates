@@ -8,6 +8,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import toast from 'react-hot-toast';
 import SEOHead from '../components/SEOHead';
+import { indianLocations } from '../data/indianLocations';
 
 // Fix for default Leaflet icon not finding images in Webpack/Vite
 import icon from 'leaflet/dist/images/marker-icon.png';
@@ -46,7 +47,16 @@ const Events = () => {
     const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'map'
     const [searchTerm, setSearchTerm] = useState(queryTerm);
     const [locationFilter, setLocationFilter] = useState(queryLocation);
+    const [selectedState, setSelectedState] = useState('All');
     const [showFilters, setShowFilters] = useState(false);
+
+    const getFlattenedCities = () => {
+        let allCities = [];
+        Object.values(indianLocations).forEach(cities => {
+            allCities = [...allCities, ...cities];
+        });
+        return allCities.sort();
+    };
 
     const isRegistrationClosed = (event) => {
         if (!event.registrationEndDate) return false;
@@ -205,6 +215,7 @@ const Events = () => {
                                         setPriceRange(100000);
                                         setSearchTerm('');
                                         setLocationFilter('All');
+                                        setSelectedState('All');
                                     }}
                                     className="text-sm font-bold text-[var(--color-accent-primary)] hover:underline border-b-2 border-transparent hover:border-[var(--color-accent-primary)]"
                                 >
@@ -212,19 +223,43 @@ const Events = () => {
                                 </button>
                             </div>
 
-                            {/* Location */}
+                            {/* Location Filter Section */}
                             <div className="mb-6">
-                                <label className="block text-sm font-black text-[var(--color-text-primary)] mb-2 uppercase tracking-wide">Location</label>
+                                {/* State Selection */}
+                                <label className="block text-sm font-black text-[var(--color-text-primary)] mb-2 uppercase tracking-wide">State</label>
+                                <select
+                                    value={selectedState}
+                                    onChange={(e) => {
+                                        setSelectedState(e.target.value);
+                                        setLocationFilter('All'); // Reset city when state changes
+                                    }}
+                                    className="w-full neo-input bg-[var(--color-bg-secondary)] text-[var(--color-text-primary)] mb-4"
+                                >
+                                    <option value="All">All States</option>
+                                    {Object.keys(indianLocations).sort().map(state => (
+                                        <option key={state} value={state}>{state}</option>
+                                    ))}
+                                </select>
+
+                                {/* City Selection */}
+                                <label className="block text-sm font-black text-[var(--color-text-primary)] mb-2 uppercase tracking-wide">City / District</label>
                                 <select
                                     value={locationFilter}
                                     onChange={(e) => setLocationFilter(e.target.value)}
                                     className="w-full neo-input bg-[var(--color-bg-secondary)] text-[var(--color-text-primary)]"
                                 >
                                     <option value="All">All Locations</option>
-                                    <option value="New York">New York, USA</option>
-                                    <option value="San Francisco">San Francisco, USA</option>
-                                    <option value="London">London, UK</option>
-                                    <option value="Tokyo">Tokyo, JP</option>
+                                    {selectedState === 'All' ? (
+                                        // Show all cities sorted alphabetically
+                                        getFlattenedCities().map((city) => (
+                                            <option key={city} value={city}>{city}</option>
+                                        ))
+                                    ) : (
+                                        // Show cities for selected state
+                                        indianLocations[selectedState]?.map((city) => (
+                                            <option key={city} value={city}>{city}</option>
+                                        ))
+                                    )}
                                 </select>
                             </div>
 
@@ -233,6 +268,7 @@ const Events = () => {
                                 <label className="block text-sm font-black text-[var(--color-text-primary)] mb-2 uppercase tracking-wide">Date</label>
                                 <input type="date" className="w-full neo-input bg-[var(--color-bg-secondary)] text-[var(--color-text-primary)]" />
                             </div>
+
 
                             {/* Price Range */}
                             <div className="mb-6">
@@ -272,12 +308,12 @@ const Events = () => {
                                 </div>
                             </div>
                         </div>
-                    </aside>
+                    </aside >
 
                     {/* Main Content */}
-                    <div className="flex-1">
+                    < div className="flex-1" >
                         {/* Toolbar */}
-                        <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
+                        < div className="flex flex-wrap justify-between items-center mb-6 gap-4" >
                             <div className="text-[var(--color-text-primary)] font-black text-xl">
                                 {filteredEvents.length} RESULTS
                             </div>
@@ -306,110 +342,112 @@ const Events = () => {
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        </div >
 
                         {/* Grid/Map Content */}
-                        {viewMode === 'grid' ? (
-                            <>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                    {filteredEvents.length > 0 ? (
-                                        filteredEvents.map(event => (
-                                            <Link key={event.id} to={isRegistrationClosed(event) ? '#' : `/events/${event.id}`} className={isRegistrationClosed(event) ? 'cursor-not-allowed' : ''}>
-                                                <div className={`neo-card bg-[var(--color-bg-surface)] overflow-hidden group h-full flex flex-col ${isRegistrationClosed(event) ? 'opacity-70 grayscale' : ''}`}>
-                                                    <div className="h-48 overflow-hidden relative border-b-2 border-[var(--color-text-primary)]">
-                                                        <img src={event.image || "https://via.placeholder.com/400x200?text=No+Image"} alt={event.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
-                                                        <div className="absolute top-2 right-2 neo-btn bg-[var(--color-accent-primary)] text-white text-xs px-2 py-1 rotate-3">
-                                                            {event.price ? (typeof event.price === 'number' ? `₹${event.price}` : event.price) : 'Free'}
+                        {
+                            viewMode === 'grid' ? (
+                                <>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                        {filteredEvents.length > 0 ? (
+                                            filteredEvents.map(event => (
+                                                <Link key={event.id} to={isRegistrationClosed(event) ? '#' : `/events/${event.id}`} className={isRegistrationClosed(event) ? 'cursor-not-allowed' : ''}>
+                                                    <div className={`neo-card bg-[var(--color-bg-surface)] overflow-hidden group h-full flex flex-col ${isRegistrationClosed(event) ? 'opacity-70 grayscale' : ''}`}>
+                                                        <div className="h-48 overflow-hidden relative border-b-2 border-[var(--color-text-primary)]">
+                                                            <img src={event.image || "https://via.placeholder.com/400x200?text=No+Image"} alt={event.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+                                                            <div className="absolute top-2 right-2 neo-btn bg-[var(--color-accent-primary)] text-white text-xs px-2 py-1 rotate-3">
+                                                                {event.price ? (typeof event.price === 'number' ? `₹${event.price}` : event.price) : 'Free'}
+                                                            </div>
+                                                            {isRegistrationClosed(event) && (
+                                                                <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                                                                    <span className="bg-red-500 text-white font-black px-4 py-2 border-2 border-white shadow-[4px_4px_0_black] -rotate-6 uppercase">
+                                                                        Registration Closed
+                                                                    </span>
+                                                                </div>
+                                                            )}
                                                         </div>
-                                                        {isRegistrationClosed(event) && (
-                                                            <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
-                                                                <span className="bg-red-500 text-white font-black px-4 py-2 border-2 border-white shadow-[4px_4px_0_black] -rotate-6 uppercase">
-                                                                    Registration Closed
+                                                        <div className="p-4 flex-1 flex flex-col">
+                                                            <div className="text-xs font-black text-[var(--color-accent-secondary)] mb-1 uppercase tracking-widest">{event.category || 'General'}</div>
+                                                            <h3 className="text-xl font-black text-[var(--color-text-primary)] mb-2 leading-tight">{event.title}</h3>
+                                                            <div className="mt-auto flex items-center justify-between">
+                                                                <span className="text-sm font-bold text-[var(--color-text-muted)]">{event.date}</span>
+                                                                <span className={`neo-btn ${isRegistrationClosed(event) ? 'bg-[var(--color-bg-secondary)] text-[var(--color-text-muted)]' : 'bg-[var(--color-text-primary)] text-[var(--color-bg-primary)] hover:bg-[var(--color-accent-primary)] hover:text-white'} px-3 py-1 text-xs`}>
+                                                                    {isRegistrationClosed(event) ? 'CLOSED' : 'DETAILS'}
                                                                 </span>
                                                             </div>
-                                                        )}
-                                                    </div>
-                                                    <div className="p-4 flex-1 flex flex-col">
-                                                        <div className="text-xs font-black text-[var(--color-accent-secondary)] mb-1 uppercase tracking-widest">{event.category || 'General'}</div>
-                                                        <h3 className="text-xl font-black text-[var(--color-text-primary)] mb-2 leading-tight">{event.title}</h3>
-                                                        <div className="mt-auto flex items-center justify-between">
-                                                            <span className="text-sm font-bold text-[var(--color-text-muted)]">{event.date}</span>
-                                                            <span className={`neo-btn ${isRegistrationClosed(event) ? 'bg-gray-300 text-gray-500' : 'bg-[var(--color-bg-surface)] text-[var(--color-text-primary)]'} px-3 py-1 text-xs`}>
-                                                                {isRegistrationClosed(event) ? 'CLOSED' : 'DETAILS'}
-                                                            </span>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </Link>
-                                        ))
-                                    ) : (
-                                        <div className="col-span-full text-center py-12 text-[var(--color-text-secondary)]">
-                                            <p className="text-xl font-bold">No events found matching your filters.</p>
+                                                </Link>
+                                            ))
+                                        ) : (
+                                            <div className="col-span-full text-center py-12 text-[var(--color-text-secondary)]">
+                                                <p className="text-xl font-bold">No events found matching your filters.</p>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* Load More */}
+                                    {filteredEvents.length > 12 && (
+                                        <div className="mt-12 text-center">
+                                            <button className="neo-btn bg-[var(--color-accent-primary)] text-white px-8 py-4 text-lg">
+                                                LOAD MORE !!!
+                                            </button>
                                         </div>
                                     )}
-                                </div>
-
-                                {/* Load More */}
-                                {filteredEvents.length > 12 && (
-                                    <div className="mt-12 text-center">
-                                        <button className="neo-btn bg-[var(--color-accent-primary)] text-white px-8 py-4 text-lg">
-                                            LOAD MORE !!!
-                                        </button>
-                                    </div>
-                                )}
-                            </>
-                        ) : (
-                            <div className="neo-card w-full h-[600px] bg-[var(--color-bg-surface)] overflow-hidden relative border-4 border-[var(--color-text-primary)] shadow-[8px_8px_0_var(--color-text-primary)]">
-                                <MapContainer
-                                    center={[20.5937, 78.9629]}
-                                    zoom={5}
-                                    scrollWheelZoom={true}
-                                    style={{ height: "100%", width: "100%", zIndex: 0 }}
-                                    className="grayscale hover:grayscale-0 transition-all duration-500"
-                                >
-                                    <TileLayer
-                                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-                                        url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
-                                    />
-                                    {filteredEvents.length > 0 && filteredEvents[0].lat && (
-                                        <SetViewOnClick coords={[filteredEvents[0].lat, filteredEvents[0].lng]} />
-                                    )}
-                                    {filteredEvents.map((event) => (
-                                        (event.coordinates || (event.lat && event.lng)) && (
-                                            <Marker
-                                                key={event.id}
-                                                position={event.coordinates || [event.lat, event.lng]}
-                                            >
-                                                <Tooltip permanent direction="top" offset={[0, -20]} className="neo-map-tooltip">
-                                                    <span className="font-black uppercase text-[8px] bg-black text-white px-1 py-0.5 border border-white">
-                                                        {event.city || event.location?.split(',').pop()?.trim()}
-                                                    </span>
-                                                </Tooltip>
-                                                <Popup className="neo-popup">
-                                                    <div className="p-2 min-w-[200px]">
-                                                        <div className="h-24 bg-[var(--color-bg-secondary)] mb-2 border-2 border-[var(--color-text-primary)] overflow-hidden relative">
-                                                            <img src={event.image} alt={event.title} className="w-full h-full object-cover" />
-                                                            <div className="absolute top-1 right-1 bg-[var(--color-text-primary)] text-[var(--color-bg-primary)] text-[8px] font-black uppercase px-1 py-0.5">₹{event.price || 'FREE'}</div>
+                                </>
+                            ) : (
+                                <div className="neo-card w-full h-[600px] bg-[var(--color-bg-surface)] overflow-hidden relative border-4 border-[var(--color-text-primary)] shadow-[8px_8px_0_var(--color-text-primary)]">
+                                    <MapContainer
+                                        center={[20.5937, 78.9629]}
+                                        zoom={5}
+                                        scrollWheelZoom={true}
+                                        style={{ height: "100%", width: "100%", zIndex: 0 }}
+                                        className="grayscale hover:grayscale-0 transition-all duration-500"
+                                    >
+                                        <TileLayer
+                                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+                                            url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+                                        />
+                                        {filteredEvents.length > 0 && filteredEvents[0].lat && (
+                                            <SetViewOnClick coords={[filteredEvents[0].lat, filteredEvents[0].lng]} />
+                                        )}
+                                        {filteredEvents.map((event) => (
+                                            (event.coordinates || (event.lat && event.lng)) && (
+                                                <Marker
+                                                    key={event.id}
+                                                    position={event.coordinates || [event.lat, event.lng]}
+                                                >
+                                                    <Tooltip permanent direction="top" offset={[0, -20]} className="neo-map-tooltip">
+                                                        <span className="font-black uppercase text-[8px] bg-black text-white px-1 py-0.5 border border-white">
+                                                            {event.city || event.location?.split(',').pop()?.trim()}
+                                                        </span>
+                                                    </Tooltip>
+                                                    <Popup className="neo-popup">
+                                                        <div className="p-2 min-w-[200px]">
+                                                            <div className="h-24 bg-[var(--color-bg-secondary)] mb-2 border-2 border-[var(--color-text-primary)] overflow-hidden relative">
+                                                                <img src={event.image} alt={event.title} className="w-full h-full object-cover" />
+                                                                <div className="absolute top-1 right-1 bg-[var(--color-text-primary)] text-[var(--color-bg-primary)] text-[8px] font-black uppercase px-1 py-0.5">₹{event.price || 'FREE'}</div>
+                                                            </div>
+                                                            <h3 className="font-black uppercase text-sm mb-1 leading-tight tracking-tighter text-[var(--color-text-primary)]">{event.title}</h3>
+                                                            <p className="text-[10px] font-bold text-[var(--color-text-muted)] uppercase mb-2 border-l-2 border-[var(--color-text-primary)] pl-1">{event.location}</p>
+                                                            <Link
+                                                                to={`/events/${event.id}`}
+                                                                className="block w-full text-center bg-[var(--color-accent-primary)] text-white py-1.5 border-2 border-[var(--color-text-primary)] font-black text-[10px] uppercase shadow-[2px_2px_0_var(--color-text-primary)] hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[3px_3px_0_var(--color-text-primary)] transition-all"
+                                                            >
+                                                                Details
+                                                            </Link>
                                                         </div>
-                                                        <h3 className="font-black uppercase text-sm mb-1 leading-tight tracking-tighter text-[var(--color-text-primary)]">{event.title}</h3>
-                                                        <p className="text-[10px] font-bold text-[var(--color-text-muted)] uppercase mb-2 border-l-2 border-[var(--color-text-primary)] pl-1">{event.location}</p>
-                                                        <Link
-                                                            to={`/events/${event.id}`}
-                                                            className="block w-full text-center bg-[var(--color-accent-primary)] text-white py-1.5 border-2 border-[var(--color-text-primary)] font-black text-[10px] uppercase shadow-[2px_2px_0_var(--color-text-primary)] hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[3px_3px_0_var(--color-text-primary)] transition-all"
-                                                        >
-                                                            Details
-                                                        </Link>
-                                                    </div>
-                                                </Popup>
-                                            </Marker>
-                                        )
-                                    ))}
-                                </MapContainer>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div>
+                                                    </Popup>
+                                                </Marker>
+                                            )
+                                        ))}
+                                    </MapContainer>
+                                </div>
+                            )
+                        }
+                    </div >
+                </div >
+            </div >
         </>
     );
 };

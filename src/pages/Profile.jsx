@@ -393,14 +393,24 @@ const Profile = () => {
                                         { id: 'notifications', label: 'Notifications', icon: '🔔' },
                                         { id: 'history', label: 'Order History', icon: '📜' },
                                         { id: 'saved', label: 'Saved Events', icon: '❤️' },
+                                        { id: 'logout', label: 'Log Out', icon: '🚪' },
                                     ].map((tab) => (
                                         <button
                                             key={tab.id}
-                                            onClick={() => { setActiveTab(tab.id); setMessage({ type: '', text: '' }); }}
+                                            onClick={() => {
+                                                if (tab.id === 'logout') {
+                                                    handleLogout();
+                                                } else {
+                                                    setActiveTab(tab.id);
+                                                    setMessage({ type: '', text: '' });
+                                                }
+                                            }}
                                             className={`w-full text-left px-4 py-3 font-black uppercase text-sm border-2 border-black transition-all flex items-center gap-3
                                         ${activeTab === tab.id
                                                     ? 'bg-[var(--color-accent-primary)] text-white shadow-[4px_4px_0_black] translate-x-[-2px] translate-y-[-2px]'
-                                                    : 'bg-[var(--color-bg-secondary)] text-[var(--color-text-primary)] hover:bg-[var(--color-bg-primary)]'}`}
+                                                    : tab.id === 'logout'
+                                                        ? 'bg-[var(--color-error)] text-white hover:bg-red-600'
+                                                        : 'bg-[var(--color-bg-secondary)] text-[var(--color-text-primary)] hover:bg-[var(--color-bg-primary)]'}`}
                                         >
                                             <span>{tab.icon}</span> {tab.label}
                                         </button>
@@ -428,7 +438,7 @@ const Profile = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     );
 };
