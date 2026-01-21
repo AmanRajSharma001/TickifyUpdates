@@ -1,5 +1,7 @@
 import React from 'react';
 import SEOHead from '../components/SEOHead';
+import saranshImg from '../assets/team/saransh.jpg';
+import madhavImg from '../assets/team/madhav.jpg';
 
 const About = () => {
     return (
@@ -58,8 +60,8 @@ const About = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
                             {/* Saransh Mittal */}
                             <div className="neo-card bg-[var(--color-bg-surface)] border-4 border-[var(--color-text-primary)] p-6 text-center group shadow-[8px_8px_0_var(--color-text-primary)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[10px_10px_0_var(--color-accent-primary)] transition-all">
-                                <div className="w-full h-48 bg-blue-100 border-2 border-[var(--color-text-primary)] mb-4 overflow-hidden relative">
-                                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Saransh" alt="Saransh Mittal" className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
+                                <div className="w-full h-64 bg-blue-100 border-2 border-[var(--color-text-primary)] mb-4 overflow-hidden relative">
+                                    <img src={saranshImg} alt="Saransh Mittal" className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500" />
                                 </div>
                                 <h3 className="font-black uppercase text-xl text-[var(--color-text-primary)]">Saransh Mittal</h3>
                                 <p className="text-sm font-bold text-[var(--color-accent-primary)] uppercase">Co-founder & CEO</p>
@@ -67,8 +69,8 @@ const About = () => {
 
                             {/* Madhav Arora */}
                             <div className="neo-card bg-[var(--color-bg-surface)] border-4 border-[var(--color-text-primary)] p-6 text-center group shadow-[8px_8px_0_var(--color-text-primary)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[10px_10px_0_var(--color-accent-secondary)] transition-all">
-                                <div className="w-full h-48 bg-purple-100 border-2 border-[var(--color-text-primary)] mb-4 overflow-hidden relative">
-                                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Madhav" alt="Madhav Arora" className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
+                                <div className="w-full h-64 bg-purple-100 border-2 border-[var(--color-text-primary)] mb-4 overflow-hidden relative">
+                                    <img src={madhavImg} alt="Madhav Arora" className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500" />
                                 </div>
                                 <h3 className="font-black uppercase text-xl text-[var(--color-text-primary)]">Madhav Arora</h3>
                                 <p className="text-sm font-bold text-[var(--color-accent-secondary)] uppercase">CTO & Co-founder</p>
